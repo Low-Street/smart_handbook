@@ -21,7 +21,7 @@ def main():
         type=str,
         default="ru",
         choices=["ru", "en"],
-        help="Язык поиска (ru - русский, en - английский). По умолчанию 'ru'."
+        help="Язык поиска (ru - русский, en - английский). По умолчанию ru."
     )
 
     args = parser.parse_args()
@@ -36,12 +36,13 @@ def main():
         else:
             print(f"Определение по запросу '{args.term}' на языке '{args.lang}' не найдено.")
 
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка сети/сервиса: {e}")
+    except requests.exceptions.RequestException:
+        print("Ошибка сети/сервиса: не удалось подключиться к сервису. Проверьте ваш интернет")
     except ValueError as e:
-        print(f"Ошибка обработки данных: {e}")
+        print(f"Ошибка обработки данных: некорректный или неожиданный формат ответа от Википедии: {e}")
     except Exception as e:
         print(f"Произошла непредвиденная ошибка: {e}")
+
 
 if __name__ == "__main__":
     main()
